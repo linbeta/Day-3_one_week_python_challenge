@@ -14,8 +14,9 @@ response = requests.get(ENDPOINT, params=PARAMS)
 response.raise_for_status()
 
 raw_data = response.json()
-
+# 找出每個時段的氣象預報資料欄位
 forecast_date = raw_data["list"]
+# 重新依照個時段最高氣溫排序，最高氣溫在最後一筆資料
 sorted_data = sorted(forecast_date, key=lambda item: item['main']['temp_max'])
 # 輸出未來五天最高溫時段將出現在何時、幾度，原始溫度單位為K，先轉為攝氏溫度(至小數點後第二位數)：
 max_temp = round((sorted_data[-1]['main']['temp_max'] - 273.15), 2)
